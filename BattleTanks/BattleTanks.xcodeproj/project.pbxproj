@@ -212,6 +212,7 @@
 		0BD6B20C191D271D00EF14A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD6B20B191D271D00EF14A4 /* AppDelegate.m */; };
 		0BD6B20F191D271D00EF14A4 /* BattleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD6B20E191D271D00EF14A4 /* BattleScene.m */; };
 		0BD6B212191D271D00EF14A4 /* IntroScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD6B211191D271D00EF14A4 /* IntroScene.m */; };
+		0BF52A9E1925A6DF008093B8 /* boom5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BF52A9D1925A6DF008093B8 /* boom5.mp3 */; };
 		0BF5CA76191D78870076BB20 /* blast.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5CA74191D78870076BB20 /* blast.mp3 */; };
 		0BF5CA77191D78870076BB20 /* boom.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5CA75191D78870076BB20 /* boom.mp3 */; };
 		0BF5CA7C191D7CB40076BB20 /* tank.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5CA79191D7CB40076BB20 /* tank.png */; };
@@ -658,6 +659,7 @@
 		0BD6B20E191D271D00EF14A4 /* BattleScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BattleScene.m; path = Classes/BattleScene.m; sourceTree = "<group>"; };
 		0BD6B210191D271D00EF14A4 /* IntroScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IntroScene.h; path = Classes/IntroScene.h; sourceTree = "<group>"; };
 		0BD6B211191D271D00EF14A4 /* IntroScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = IntroScene.m; path = Classes/IntroScene.m; sourceTree = "<group>"; };
+		0BF52A9D1925A6DF008093B8 /* boom5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = boom5.mp3; sourceTree = "<group>"; };
 		0BF5CA74191D78870076BB20 /* blast.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = blast.mp3; sourceTree = "<group>"; };
 		0BF5CA75191D78870076BB20 /* boom.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = boom.mp3; sourceTree = "<group>"; };
 		0BF5CA79191D7CB40076BB20 /* tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tank.png; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 		0BD6AF7B191D271600EF14A4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0BF52A9D1925A6DF008093B8 /* boom5.mp3 */,
 				0BF5CA7E191D7D2F0076BB20 /* building.png */,
 				0BF5CA79191D7CB40076BB20 /* tank.png */,
 				0BF5CA7A191D7CB40076BB20 /* tree.png */,
@@ -1650,6 +1653,7 @@
 				0BD6B17F191D271B00EF14A4 /* LICENSE_Kazmath.txt in Resources */,
 				0BD6AF8A191D271600EF14A4 /* Icon-72.png in Resources */,
 				0BD6B0D8191D271900EF14A4 /* LICENSE_cocos2d.txt in Resources */,
+				0BF52A9E1925A6DF008093B8 /* boom5.mp3 in Resources */,
 				0BD6AF81191D271600EF14A4 /* Default-568h@2x.png in Resources */,
 				0BD6AFA1191D271600EF14A4 /* iTunesArtwork in Resources */,
 				0BD6AF9C191D271600EF14A4 /* Icon-Spotlight-iOS7.png in Resources */,

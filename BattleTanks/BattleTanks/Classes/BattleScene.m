@@ -12,6 +12,7 @@
 CCSprite *tank;
 CCSprite *tree;
 CCSprite *building;
+CCPhysicsNode *physicsNode;
 
 @implementation BattleScene
 
@@ -32,24 +33,35 @@ CCSprite *building;
     CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:236/255. green:240/255. blue:241/255. alpha:.8f]];
     [self addChild:background];
     
-    // Add tank sprite
+    //Creating physics node object
+    physicsNode = [CCPhysicsNode node];
+    physicsNode.gravity = ccp(0,0);
+    physicsNode.collisionDelegate = self;
+    [self addChild:physicsNode];
+    
+    // Add tank sprite and collision body
     tank = [CCSprite spriteWithImageNamed:@"tank.png"];
-    tank.position  = ccp(150.0f, 280.0f);
-    tank.physicsBody.collisionType = @"Tank";
-    CGRect tankCollisionBody = [tank boundingBox];
-    [self addChild:tank];
+    tank.position = ccp(150.0f, 200.0f);
+    tank.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tank.contentSize} cornerRadius:0];
+    tank.physicsBody.collisionGroup = @"tankGroup";
+    tank.physicsBody.collisionType = @"tankCollision";
+    [physicsNode addChild:tank];
     
-    // Add tree sprite
+    // Add tree sprite and collision body
     tree = [CCSprite spriteWithImageNamed:@"tree.png"];
-    tree.position  = ccp(250.0f, 280.0f);
-    CGRect treeCollisionBody = [tree boundingBox];
-    [self addChild:tree];
+    tree.position = ccp(250.0f, 200.0f);
+    tree.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tree.contentSize} cornerRadius:0];
+    tree.physicsBody.collisionGroup = @"treeGroup";
+    tree.physicsBody.collisionType = @"treeCollision";
+    [physicsNode addChild:tree];
     
-    // Add building sprite
+    // Add building sprite and collision body
     building = [CCSprite spriteWithImageNamed:@"building.png"];
-    building.position  = ccp(350.0f, 280.0f);
-    CGRect buildingCollisionBody = [building boundingBox];
-    [self addChild:building];
+    building.position = ccp(350.0f, 200.0f);
+    building.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, building.contentSize} cornerRadius:0];
+    building.physicsBody.collisionGroup = @"buildingGroup";
+    building.physicsBody.collisionType = @"buildingCollision";
+    [physicsNode addChild:building];
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"Menu" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -78,21 +90,27 @@ CCSprite *building;
 
 -(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     
-    //Sound effects added
-    if (tank){
-        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
-        [audio playEffect:@"blast.mp3"];
-    } else if (tree){
-        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
-        [audio playEffect:@"boom.mp3"];
-    } else {
-        return;
-    }
+    //Sound for tank moving around
+    OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+    [audio playEffect:@"blast.mp3"];
     
-    //Move around the screen
+    //Move the tank around using linear interpolation and time
     CGPoint touchLoc = [touch locationInNode:self];
-    CCActionMoveTo *actionMove = [CCActionMoveTo actionWithDuration:0.5f position:touchLoc];
-    [tank runAction:actionMove];
+    CCActionMoveTo *tankMove = [CCActionMoveTo actionWithDuration:0.5f position:touchLoc];
+    [tank runAction:tankMove];
+    
+    //If tank hits tree or building, either one disappears and makes a different boom sound
+    if (CGRectIntersectsRect(tank.boundingBox, tree.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *treeRemove = [CCActionRemove action];
+        [tree runAction:treeRemove];
+    } else if (CGRectIntersectsRect(tank.boundingBox, building.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *buildingRemove = [CCActionRemove action];
+        [building runAction:buildingRemove];
+    }
 }
 
 - (void)onBackClicked:(id)sender

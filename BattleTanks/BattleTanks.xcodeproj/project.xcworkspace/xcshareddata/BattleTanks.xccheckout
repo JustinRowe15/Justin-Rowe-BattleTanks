@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>242ADCFF-7934-439C-9F3B-F2FEA8269F68</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BattleTanks</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D060B7F7-00D1-43F0-8404-2076B66914DE</key>
+		<string>https://github.com/JustinRowe15/Justin-Rowe-BattleTanks.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BattleTanks/BattleTanks.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D060B7F7-00D1-43F0-8404-2076B66914DE</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/JustinRowe15/Justin-Rowe-BattleTanks.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D060B7F7-00D1-43F0-8404-2076B66914DE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D060B7F7-00D1-43F0-8404-2076B66914DE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Justin-Rowe-BattleTanks</string>
+		</dict>
+	</array>
+</dict>
+</plist>

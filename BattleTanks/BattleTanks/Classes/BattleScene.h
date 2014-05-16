@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 #import "cocos2d-ui.h"
 
-@interface BattleScene : CCScene
+@interface BattleScene : CCScene <CCPhysicsCollisionDelegate>
 
 + (BattleScene *)scene;
 - (id)init;
