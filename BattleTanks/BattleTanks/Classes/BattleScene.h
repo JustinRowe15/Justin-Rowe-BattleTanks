@@ -14,4 +14,8 @@
 + (BattleScene *)scene;
 - (id)init;
 
+@property (nonatomic, strong) NSTimer *timer;
+
+-(void)updateCounter;
+
 @end

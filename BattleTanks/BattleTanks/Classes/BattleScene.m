@@ -8,13 +8,32 @@
 
 #import "BattleScene.h"
 #import "IntroScene.h"
+#import "CCAnimation.h"
+#import "CCActionManager.h"
 
 CCSprite *tank;
 CCSprite *tree;
 CCSprite *building;
+CCSprite *backgroundImage;
+CCSprite *bomb;
+CCSprite *explosion;
+CCAction *bombExplode;
+CCLabelTTF *countdownLabel;
+CCLabelTTF *startLabel;
 CCPhysicsNode *physicsNode;
+CCSpriteBatchNode *explosionBatchNode;
+CCButton *pauseButton;
+BOOL tankGone = NO;
+BOOL treeGone = NO;
+BOOL buildingGone = NO;
 
 @implementation BattleScene
+
+@synthesize timer;
+
+int minutes;
+int seconds;
+int secondsLeft;
 
 + (BattleScene *)scene
 {
@@ -29,9 +48,9 @@ CCPhysicsNode *physicsNode;
     // Set user interaction
     self.userInteractionEnabled = YES;
     
-    // Set background color
-    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:236/255. green:240/255. blue:241/255. alpha:.8f]];
-    [self addChild:background];
+    backgroundImage = [CCSprite spriteWithImageNamed:@"background.png"];
+    backgroundImage.anchorPoint = CGPointMake(0, 0);
+    [self addChild:backgroundImage];
     
     //Creating physics node object
     physicsNode = [CCPhysicsNode node];
@@ -63,12 +82,39 @@ CCPhysicsNode *physicsNode;
     building.physicsBody.collisionType = @"buildingCollision";
     [physicsNode addChild:building];
     
+    // Add bomb sprite and collision body
+    bomb = [CCSprite spriteWithImageNamed:@"bomb.png"];
+    bomb.position = ccp(420.0f, 120.0f);
+    bomb.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, building.contentSize} cornerRadius:0];
+    bomb.physicsBody.collisionGroup = @"bombGroup";
+    bomb.physicsBody.collisionType = @"bombCollision";
+    [physicsNode addChild:bomb];
+    
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"Menu" fontName:@"Verdana-Bold" fontSize:18.0f];
-    backButton.positionType = CCPositionTypeNormalized;
-    backButton.position = ccp(0.85f, 0.95f);
+    backButton.position = ccp(530.0f, 304.0f);
     [backButton setTarget:self selector:@selector(onBackClicked:)];
     [self addChild:backButton];
+    
+    // Create a pause button
+    pauseButton = [CCButton buttonWithTitle:@"Pause" fontName:@"Verdana-Bold" fontSize:18.0f];
+    pauseButton.position = ccp(530.0f, 34.0f);
+    [pauseButton setTarget:self selector:@selector(pauseResumeGame:)];
+    [self addChild:pauseButton];
+
+    // Create a countdown label
+    countdownLabel = [CCLabelTTF labelWithString:@"02:00" fontName:@"Verdana-Bold" fontSize:18.0f];
+    countdownLabel.position = ccp(40.0f, 304.0f);
+    [self addChild:countdownLabel];
+    
+    //Timer method
+    secondsLeft = 120;
+    [self schedule: @selector(updateCounter) interval:1];
+    
+    // Explosion animation
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"explosion.plist"];
+    explosionBatchNode = [CCSpriteBatchNode batchNodeWithFile:@"explosion.png"];
+    [self addChild:explosionBatchNode];
 
 	return self;
 }
@@ -105,11 +151,51 @@ CCPhysicsNode *physicsNode;
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *treeRemove = [CCActionRemove action];
         [tree runAction:treeRemove];
+        treeGone = YES;
     } else if (CGRectIntersectsRect(tank.boundingBox, building.boundingBox)) {
         OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *buildingRemove = [CCActionRemove action];
         [building runAction:buildingRemove];
+        buildingGone = YES;
+    } else if (CGRectIntersectsRect(tank.boundingBox, bomb.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *removeAction = [CCActionRemove action];
+        [bomb runAction:removeAction];
+        
+        NSMutableArray *animation = [NSMutableArray array];
+        for (int i=1; i<=16; i++) {
+            [animation addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"exp%d.png", i]]];
+        }
+        
+        // Animation explosion and bomb method
+        CCAnimation *explosionAnimation = [CCAnimation animationWithSpriteFrames:animation delay:0.1f];
+        explosion = [CCSprite spriteWithImageNamed:@"exp1.png"];
+        explosion.position = ccp(420.0f, 120.0f);
+        bombExplode = [CCActionAnimate actionWithAnimation:explosionAnimation];
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
+        
+        // Game Over Lose Condition
+        CCActionRemove *tankRemove = [CCActionRemove action];
+        [tank runAction:tankRemove];
+        tankGone = YES;
+        if (tankGone == YES){
+            //[[CCDirector sharedDirector] pause];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+            [alert show];
+            
+            //[[CCDirector sharedDirector] replaceScene:[IntroScene scene]
+            //                           withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
+        }
+    }
+    
+    // Game Over Win Condition
+    if (treeGone == YES && buildingGone == YES) {
+        [[CCDirector sharedDirector] pause];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You win!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [alert show];
     }
 }
 
@@ -117,6 +203,36 @@ CCPhysicsNode *physicsNode;
 {
     [[CCDirector sharedDirector] replaceScene:[IntroScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
+}
+
+// Pause Button
+- (void)pauseResumeGame:(id)sender
+{
+    if ([pauseButton.title isEqual:@"Pause"]) {
+        [[CCDirector sharedDirector] pause];
+        pauseButton.title = @"Resume";
+    } else {
+        [[CCDirector sharedDirector] resume];
+        pauseButton.title = @"Pause";
+    }
+}
+
+// Timer counter method
+-(void)updateCounter {
+    if (secondsLeft > 0){
+        secondsLeft --;
+        seconds = (secondsLeft % 3600) % 60;
+        minutes = (secondsLeft % 3600) / 60;
+        
+        NSString *timerString = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+        countdownLabel.string = timerString;
+        
+    } else {
+        // Game over if time ends
+        [[CCDirector sharedDirector] pause];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You ran out of time!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 @end
