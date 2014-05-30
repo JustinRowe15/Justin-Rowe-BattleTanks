@@ -13,9 +13,14 @@
 
 CCSprite *tank;
 CCSprite *tree;
+CCSprite *tree1;
+CCSprite *tree2;
+CCSprite *tree3;
+CCSprite *tree4;
 CCSprite *building;
 CCSprite *backgroundImage;
 CCSprite *bomb;
+CCSprite *bomb1;
 CCSprite *explosion;
 CCAction *bombExplode;
 CCLabelTTF *countdownLabel;
@@ -23,8 +28,13 @@ CCLabelTTF *startLabel;
 CCPhysicsNode *physicsNode;
 CCSpriteBatchNode *explosionBatchNode;
 CCButton *pauseButton;
+
 BOOL tankGone = NO;
 BOOL treeGone = NO;
+BOOL treeGone1 = NO;
+BOOL treeGone2 = NO;
+BOOL treeGone3 = NO;
+BOOL treeGone4 = NO;
 BOOL buildingGone = NO;
 
 @implementation BattleScene
@@ -74,6 +84,38 @@ int secondsLeft;
     tree.physicsBody.collisionType = @"treeCollision";
     [physicsNode addChild:tree];
     
+    // Add tree sprite and collision body
+    tree1 = [CCSprite spriteWithImageNamed:@"tree.png"];
+    tree1.position = ccp(220.0f, 26.0f);
+    tree1.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tree.contentSize} cornerRadius:0];
+    tree1.physicsBody.collisionGroup = @"treeGroup";
+    tree1.physicsBody.collisionType = @"treeCollision";
+    [physicsNode addChild:tree1];
+    
+    // Add tree sprite and collision body
+    tree2 = [CCSprite spriteWithImageNamed:@"tree.png"];
+    tree2.position = ccp(80.0f, 270.0f);
+    tree2.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tree.contentSize} cornerRadius:0];
+    tree2.physicsBody.collisionGroup = @"treeGroup";
+    tree2.physicsBody.collisionType = @"treeCollision";
+    [physicsNode addChild:tree2];
+    
+    // Add tree sprite and collision body
+    tree3 = [CCSprite spriteWithImageNamed:@"tree.png"];
+    tree3.position = ccp(440.0f, 228.0f);
+    tree3.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tree.contentSize} cornerRadius:0];
+    tree3.physicsBody.collisionGroup = @"treeGroup";
+    tree3.physicsBody.collisionType = @"treeCollision";
+    [physicsNode addChild:tree3];
+    
+    // Add tree sprite and collision body
+    tree4 = [CCSprite spriteWithImageNamed:@"tree.png"];
+    tree4.position = ccp(488.0f, 150.0f);
+    tree4.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tree.contentSize} cornerRadius:0];
+    tree4.physicsBody.collisionGroup = @"treeGroup";
+    tree4.physicsBody.collisionType = @"treeCollision";
+    [physicsNode addChild:tree4];
+    
     // Add building sprite and collision body
     building = [CCSprite spriteWithImageNamed:@"building.png"];
     building.position = ccp(350.0f, 200.0f);
@@ -89,6 +131,14 @@ int secondsLeft;
     bomb.physicsBody.collisionGroup = @"bombGroup";
     bomb.physicsBody.collisionType = @"bombCollision";
     [physicsNode addChild:bomb];
+    
+    // Add bomb sprite and collision body
+    bomb1 = [CCSprite spriteWithImageNamed:@"bomb.png"];
+    bomb1.position = ccp(30.0f, 180.0f);
+    bomb1.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, building.contentSize} cornerRadius:0];
+    bomb1.physicsBody.collisionGroup = @"bombGroup";
+    bomb1.physicsBody.collisionType = @"bombCollision";
+    [physicsNode addChild:bomb1];
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"Menu" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -136,9 +186,15 @@ int secondsLeft;
 
 -(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     
-    //Sound for tank moving around
-    OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
-    [audio playEffect:@"blast.mp3"];
+    NSMutableArray *animation = [NSMutableArray array];
+    for (int i=1; i<=16; i++) {
+        [animation addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"exp%d.png", i]]];
+    }
+    
+    // Animation explosion and bomb method
+    CCAnimation *explosionAnimation = [CCAnimation animationWithSpriteFrames:animation delay:0.1f];
+    explosion = [CCSprite spriteWithImageNamed:@"exp1.png"];
+    bombExplode = [CCActionAnimate actionWithAnimation:explosionAnimation];
     
     //Move the tank around using linear interpolation and time
     CGPoint touchLoc = [touch locationInNode:self];
@@ -151,49 +207,90 @@ int secondsLeft;
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *treeRemove = [CCActionRemove action];
         [tree runAction:treeRemove];
+        explosion.position = ccp(250.0f, 200.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
         treeGone = YES;
+        
+    } else if (CGRectIntersectsRect(tank.boundingBox, tree1.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *treeRemove = [CCActionRemove action];
+        [tree1 runAction:treeRemove];
+        explosion.position = ccp(220.0f, 26.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
+        treeGone1 = YES;
+        
+    } else if (CGRectIntersectsRect(tank.boundingBox, tree2.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *treeRemove = [CCActionRemove action];
+        [tree2 runAction:treeRemove];
+        explosion.position = ccp(80.0f, 270.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
+        treeGone2 = YES;
+        
+    } else if (CGRectIntersectsRect(tank.boundingBox, tree3.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *treeRemove = [CCActionRemove action];
+        [tree3 runAction:treeRemove];
+        explosion.position = ccp(440.0f, 228.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
+        treeGone3 = YES;
+        
+    } else if (CGRectIntersectsRect(tank.boundingBox, tree4.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"boom5.mp3"];
+        CCActionRemove *treeRemove = [CCActionRemove action];
+        [tree4 runAction:treeRemove];
+        explosion.position = ccp(488.0f, 150.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
+        treeGone4 = YES;
+        
     } else if (CGRectIntersectsRect(tank.boundingBox, building.boundingBox)) {
         OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *buildingRemove = [CCActionRemove action];
         [building runAction:buildingRemove];
+        explosion.position = ccp(350.0f, 200.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
         buildingGone = YES;
+        
     } else if (CGRectIntersectsRect(tank.boundingBox, bomb.boundingBox)) {
         OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
-        [audio playEffect:@"boom5.mp3"];
+        [audio playEffect:@"blast.mp3"];
         CCActionRemove *removeAction = [CCActionRemove action];
         [bomb runAction:removeAction];
         
-        NSMutableArray *animation = [NSMutableArray array];
-        for (int i=1; i<=16; i++) {
-            [animation addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"exp%d.png", i]]];
-        }
-        
-        // Animation explosion and bomb method
-        CCAnimation *explosionAnimation = [CCAnimation animationWithSpriteFrames:animation delay:0.1f];
-        explosion = [CCSprite spriteWithImageNamed:@"exp1.png"];
         explosion.position = ccp(420.0f, 120.0f);
-        bombExplode = [CCActionAnimate actionWithAnimation:explosionAnimation];
         [explosion runAction:bombExplode];
         [explosionBatchNode addChild:explosion];
         
-        // Game Over Lose Condition
-        CCActionRemove *tankRemove = [CCActionRemove action];
-        [tank runAction:tankRemove];
-        tankGone = YES;
-        if (tankGone == YES){
-            //[[CCDirector sharedDirector] pause];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-            [alert show];
-            
-            //[[CCDirector sharedDirector] replaceScene:[IntroScene scene]
-            //                           withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
-        }
+        [self gameLose];
+    }
+    
+    else if (CGRectIntersectsRect(tank.boundingBox, bomb1.boundingBox)) {
+        OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+        [audio playEffect:@"blast.mp3"];
+        CCActionRemove *removeAction = [CCActionRemove action];
+        [bomb1 runAction:removeAction];
+        
+        explosion.position = ccp(30.0f, 180.0f);
+        [explosion runAction:bombExplode];
+        [explosionBatchNode addChild:explosion];
+        
+        [self gameLose];
     }
     
     // Game Over Win Condition
-    if (treeGone == YES && buildingGone == YES) {
-        [[CCDirector sharedDirector] pause];
+    if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && buildingGone == YES) {
+        //[[CCDirector sharedDirector] pause];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You win!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
     }
@@ -232,6 +329,19 @@ int secondsLeft;
         [[CCDirector sharedDirector] pause];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You ran out of time!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+    }
+}
+
+-(void)gameLose {
+    // Game Over Lose Condition
+    CCActionRemove *tankRemove = [CCActionRemove action];
+    [tank runAction:tankRemove];
+    tankGone = YES;
+    if (tankGone == YES){
+        //[[CCDirector sharedDirector] pause];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [alert show];
+        
     }
 }
 
