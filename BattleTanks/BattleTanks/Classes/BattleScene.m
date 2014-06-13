@@ -320,12 +320,13 @@ int secondsLeft;
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *treeRemove = [CCActionRemove action];
         [tree4 runAction:treeRemove];
-        [self updateTreePoints];
         explosion.position = ccp(488.0f, 150.0f);
         [explosion runAction:bombExplode];
         [explosionBatchNode addChild:explosion];
         treeGone4 = YES;
         //[self removeExplosion];
+        
+        [self gameLoseLandMine];
         
     } else if (CGRectIntersectsRect(tank.boundingBox, tree5.boundingBox)) {
         OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
@@ -380,12 +381,13 @@ int secondsLeft;
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *buildingRemove = [CCActionRemove action];
         [building2 runAction:buildingRemove];
-        [self updateBuildingPoints];
         explosion.position = ccp(110.0f, 270.0f);
         [explosion runAction:bombExplode];
         [explosionBatchNode addChild:explosion];
         buildingGone2 = YES;
         //[self removeExplosion];
+        
+        [self gameLoseLandMine];
         
     } else if (CGRectIntersectsRect(tank.boundingBox, building3.boundingBox)) {
         OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
@@ -428,12 +430,13 @@ int secondsLeft;
         [audio playEffect:@"boom5.mp3"];
         CCActionRemove *buildingRemove = [CCActionRemove action];
         [building6 runAction:buildingRemove];
-        [self updateBuildingPoints];
         explosion.position = ccp(510.0f, 315.0f);
         [explosion runAction:bombExplode];
         [explosionBatchNode addChild:explosion];
         buildingGone6 = YES;
         //[self removeExplosion];
+        
+        [self gameLoseLandMine];
         
     } else if (CGRectIntersectsRect(tank.boundingBox, bomb.boundingBox)) {
         OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
@@ -575,6 +578,18 @@ int secondsLeft;
     tankGone = YES;
     if (tankGone == YES){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [alert show];
+        
+    }
+}
+
+-(void)gameLoseLandMine {
+    // Game Over Lose Condition
+    CCActionRemove *tankRemove = [CCActionRemove action];
+    [tank runAction:tankRemove];
+    tankGone = YES;
+    if (tankGone == YES){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead from a hidden mine!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
         
     }
