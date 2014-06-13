@@ -17,5 +17,9 @@
 @property (nonatomic, strong) NSTimer *timer;
 
 -(void)updateCounter;
+-(void)updateTreePoints;
+-(void)updateBuildingPoints;
+-(void)removeSprite;
+-(void)remove;
 
 @end

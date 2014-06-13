@@ -27,6 +27,8 @@ CCSprite *tank1;
     self = [super init];
     if (!self) return(nil);
     
+    [[CCDirector sharedDirector] setDisplayStats:NO];
+    
     backgroundImage = [CCSprite spriteWithImageNamed:@"background.png"];
     backgroundImage.anchorPoint = CGPointMake(0, 0);
     [self addChild:backgroundImage];
