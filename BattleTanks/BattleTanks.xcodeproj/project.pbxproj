@@ -40,6 +40,23 @@
 		0B38D9F81937B404006C8D0D /* building@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B38D9F61937B404006C8D0D /* building@2x.png */; };
 		0B38D9FB1937B433006C8D0D /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B38D9F91937B433006C8D0D /* bomb.png */; };
 		0B38D9FC1937B433006C8D0D /* bomb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B38D9FA1937B433006C8D0D /* bomb@2x.png */; };
+		0BD15F3F19527EC000892DCE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F3E19527EC000892DCE /* GameKit.framework */; };
+		0BD15F4219534E9200892DCE /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F4119534E9200892DCE /* GameCenterManager.m */; };
+		0BD15F46195363CF00892DCE /* LeaderBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F45195363CF00892DCE /* LeaderBoard.m */; };
+		0BD15F481953B8C100892DCE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F471953B8C100892DCE /* Parse.framework */; };
+		0BD15F4A1953BAB400892DCE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F491953BAB400892DCE /* StoreKit.framework */; };
+		0BD15F4C1953BABD00892DCE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F4B1953BABD00892DCE /* SystemConfiguration.framework */; };
+		0BD15F4E1953BAC700892DCE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F4D1953BAC700892DCE /* MapKit.framework */; };
+		0BD15F501953BACC00892DCE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F4F1953BACC00892DCE /* MessageUI.framework */; };
+		0BD15F521953BAD400892DCE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F511953BAD400892DCE /* CFNetwork.framework */; };
+		0BD15F541953BADA00892DCE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F531953BADA00892DCE /* CoreLocation.framework */; };
+		0BD15F561953BAE300892DCE /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F551953BAE300892DCE /* libz.1.1.3.dylib */; };
+		0BD15F581953BAEB00892DCE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F571953BAEB00892DCE /* Security.framework */; };
+		0BD15F5A1953BAF400892DCE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F591953BAF400892DCE /* MobileCoreServices.framework */; };
+		0BD15F5C1953BB1D00892DCE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F5B1953BB1D00892DCE /* FacebookSDK.framework */; };
+		0BD15F5F1953BE6F00892DCE /* LocalLeaderBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F5E1953BE6F00892DCE /* LocalLeaderBoardViewController.m */; };
+		0BD15F621953C8CB00892DCE /* WeeklyLeaderBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F611953C8CB00892DCE /* WeeklyLeaderBoardViewController.m */; };
+		0BD15F651953C93000892DCE /* DailyLeaderBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F641953C93000892DCE /* DailyLeaderBoardViewController.m */; };
 		0BD6AF63191D271600EF14A4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD6AF62191D271600EF14A4 /* QuartzCore.framework */; };
 		0BD6AF65191D271600EF14A4 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD6AF64191D271600EF14A4 /* OpenGLES.framework */; };
 		0BD6AF67191D271600EF14A4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD6AF66191D271600EF14A4 /* OpenAL.framework */; };
@@ -281,6 +298,29 @@
 		0B38D9F61937B404006C8D0D /* building@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "building@2x.png"; sourceTree = "<group>"; };
 		0B38D9F91937B433006C8D0D /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb.png; sourceTree = "<group>"; };
 		0B38D9FA1937B433006C8D0D /* bomb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bomb@2x.png"; sourceTree = "<group>"; };
+		0BD15F3E19527EC000892DCE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		0BD15F4019534E9200892DCE /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterManager.h; sourceTree = "<group>"; };
+		0BD15F4119534E9200892DCE /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterManager.m; sourceTree = "<group>"; };
+		0BD15F4319534F4400892DCE /* AppSpecificValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSpecificValues.h; sourceTree = "<group>"; };
+		0BD15F44195363CF00892DCE /* LeaderBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderBoard.h; sourceTree = "<group>"; };
+		0BD15F45195363CF00892DCE /* LeaderBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderBoard.m; sourceTree = "<group>"; };
+		0BD15F471953B8C100892DCE /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		0BD15F491953BAB400892DCE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0BD15F4B1953BABD00892DCE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0BD15F4D1953BAC700892DCE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0BD15F4F1953BACC00892DCE /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		0BD15F511953BAD400892DCE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		0BD15F531953BADA00892DCE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0BD15F551953BAE300892DCE /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		0BD15F571953BAEB00892DCE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		0BD15F591953BAF400892DCE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		0BD15F5B1953BB1D00892DCE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		0BD15F5D1953BE6F00892DCE /* LocalLeaderBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalLeaderBoardViewController.h; sourceTree = "<group>"; };
+		0BD15F5E1953BE6F00892DCE /* LocalLeaderBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLeaderBoardViewController.m; sourceTree = "<group>"; };
+		0BD15F601953C8CB00892DCE /* WeeklyLeaderBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyLeaderBoardViewController.h; sourceTree = "<group>"; };
+		0BD15F611953C8CB00892DCE /* WeeklyLeaderBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyLeaderBoardViewController.m; sourceTree = "<group>"; };
+		0BD15F631953C93000892DCE /* DailyLeaderBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyLeaderBoardViewController.h; sourceTree = "<group>"; };
+		0BD15F641953C93000892DCE /* DailyLeaderBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyLeaderBoardViewController.m; sourceTree = "<group>"; };
 		0BD6AF5F191D271600EF14A4 /* BattleTanks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BattleTanks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BD6AF62191D271600EF14A4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0BD6AF64191D271600EF14A4 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -704,6 +744,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD15F5A1953BAF400892DCE /* MobileCoreServices.framework in Frameworks */,
+				0BD15F581953BAEB00892DCE /* Security.framework in Frameworks */,
+				0BD15F561953BAE300892DCE /* libz.1.1.3.dylib in Frameworks */,
+				0BD15F541953BADA00892DCE /* CoreLocation.framework in Frameworks */,
+				0BD15F521953BAD400892DCE /* CFNetwork.framework in Frameworks */,
+				0BD15F501953BACC00892DCE /* MessageUI.framework in Frameworks */,
+				0BD15F4E1953BAC700892DCE /* MapKit.framework in Frameworks */,
+				0BD15F4C1953BABD00892DCE /* SystemConfiguration.framework in Frameworks */,
+				0BD15F4A1953BAB400892DCE /* StoreKit.framework in Frameworks */,
+				0BD6AF69191D271600EF14A4 /* AudioToolbox.framework in Frameworks */,
+				0BD15F3F19527EC000892DCE /* GameKit.framework in Frameworks */,
 				0BD6AF79191D271600EF14A4 /* libObjectiveChipmunk.a in Frameworks */,
 				0BD6AF67191D271600EF14A4 /* OpenAL.framework in Frameworks */,
 				0BD6AF6D191D271600EF14A4 /* UIKit.framework in Frameworks */,
@@ -712,8 +763,9 @@
 				0BD6AF71191D271600EF14A4 /* CoreGraphics.framework in Frameworks */,
 				0BD6AF73191D271600EF14A4 /* CoreText.framework in Frameworks */,
 				0BD6AF65191D271600EF14A4 /* OpenGLES.framework in Frameworks */,
+				0BD15F5C1953BB1D00892DCE /* FacebookSDK.framework in Frameworks */,
 				0BD6AF6F191D271600EF14A4 /* Foundation.framework in Frameworks */,
-				0BD6AF69191D271600EF14A4 /* AudioToolbox.framework in Frameworks */,
+				0BD15F481953B8C100892DCE /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,6 +816,18 @@
 		0BD6AF61191D271600EF14A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0BD15F5B1953BB1D00892DCE /* FacebookSDK.framework */,
+				0BD15F591953BAF400892DCE /* MobileCoreServices.framework */,
+				0BD15F571953BAEB00892DCE /* Security.framework */,
+				0BD15F551953BAE300892DCE /* libz.1.1.3.dylib */,
+				0BD15F531953BADA00892DCE /* CoreLocation.framework */,
+				0BD15F511953BAD400892DCE /* CFNetwork.framework */,
+				0BD15F4F1953BACC00892DCE /* MessageUI.framework */,
+				0BD15F4D1953BAC700892DCE /* MapKit.framework */,
+				0BD15F4B1953BABD00892DCE /* SystemConfiguration.framework */,
+				0BD15F491953BAB400892DCE /* StoreKit.framework */,
+				0BD15F471953B8C100892DCE /* Parse.framework */,
+				0BD15F3E19527EC000892DCE /* GameKit.framework */,
 				0BD6AF62191D271600EF14A4 /* QuartzCore.framework */,
 				0BD6AF64191D271600EF14A4 /* OpenGLES.framework */,
 				0BD6AF66191D271600EF14A4 /* OpenAL.framework */,
@@ -1603,6 +1667,9 @@
 		0BD6B209191D271D00EF14A4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0BD15F4319534F4400892DCE /* AppSpecificValues.h */,
+				0BD15F4019534E9200892DCE /* GameCenterManager.h */,
+				0BD15F4119534E9200892DCE /* GameCenterManager.m */,
 				0BD6B20A191D271D00EF14A4 /* AppDelegate.h */,
 				0BD6B20B191D271D00EF14A4 /* AppDelegate.m */,
 				0BD6B20D191D271D00EF14A4 /* BattleScene.h */,
@@ -1613,6 +1680,14 @@
 				0B38D9EB193794EC006C8D0D /* HowToPlay.m */,
 				0B38D9E71937881C006C8D0D /* CreditsScene.h */,
 				0B38D9E81937881C006C8D0D /* CreditsScene.m */,
+				0BD15F44195363CF00892DCE /* LeaderBoard.h */,
+				0BD15F45195363CF00892DCE /* LeaderBoard.m */,
+				0BD15F5D1953BE6F00892DCE /* LocalLeaderBoardViewController.h */,
+				0BD15F5E1953BE6F00892DCE /* LocalLeaderBoardViewController.m */,
+				0BD15F601953C8CB00892DCE /* WeeklyLeaderBoardViewController.h */,
+				0BD15F611953C8CB00892DCE /* WeeklyLeaderBoardViewController.m */,
+				0BD15F631953C93000892DCE /* DailyLeaderBoardViewController.h */,
+				0BD15F641953C93000892DCE /* DailyLeaderBoardViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1661,6 +1736,16 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Justin Rowe";
+				TargetAttributes = {
+					0BD6AF5E191D271600EF14A4 = {
+						DevelopmentTeam = 37LNQYH5WQ;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 0BD6AF5A191D271600EF14A4 /* Build configuration list for PBXProject "BattleTanks" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1761,6 +1846,7 @@
 				0BD6B09C191D271900EF14A4 /* CCAppDelegate.m in Sources */,
 				0BD6B0A0191D271900EF14A4 /* CCDirectorMac.m in Sources */,
 				0BD6AFD4191D271700EF14A4 /* ccDeprecated.m in Sources */,
+				0BD15F4219534E9200892DCE /* GameCenterManager.m in Sources */,
 				0BD6B103191D271A00EF14A4 /* ALContext.m in Sources */,
 				0BD6AFDF191D271700EF14A4 /* CCDrawNode.m in Sources */,
 				0BD6B0B0191D271900EF14A4 /* CCFileUtils.m in Sources */,
@@ -1783,6 +1869,7 @@
 				0BD6AFAF191D271600EF14A4 /* CCActionEase.m in Sources */,
 				0BD6AFBE191D271700EF14A4 /* CCActionTween.m in Sources */,
 				0BD6B12C191D271A00EF14A4 /* NSMutableDictionary+WeakReferences.m in Sources */,
+				0BD15F651953C93000892DCE /* DailyLeaderBoardViewController.m in Sources */,
 				0BD6B009191D271800EF14A4 /* CCNode+Debug.m in Sources */,
 				0BD6AFC2191D271700EF14A4 /* CCAnimation.m in Sources */,
 				0BD6B16B191D271B00EF14A4 /* mat3.c in Sources */,
@@ -1808,6 +1895,7 @@
 				0BD6AFBB191D271700EF14A4 /* CCActionProgressTimer.m in Sources */,
 				0BD6B171191D271B00EF14A4 /* plane.c in Sources */,
 				0BD6B0F4191D271A00EF14A4 /* OALSimpleAudio.m in Sources */,
+				0BD15F46195363CF00892DCE /* LeaderBoard.m in Sources */,
 				0BD6AFE6191D271700EF14A4 /* CCGLProgram.m in Sources */,
 				0BD6B208191D271D00EF14A4 /* main.m in Sources */,
 				0BD6B11B191D271A00EF14A4 /* OALAudioSession.m in Sources */,
@@ -1834,6 +1922,7 @@
 				0BD6B055191D271900EF14A4 /* ccShaders.m in Sources */,
 				0BD6B169191D271B00EF14A4 /* matrix.c in Sources */,
 				0BD6B07B191D271900EF14A4 /* CCTiledMapLayer.m in Sources */,
+				0BD15F5F1953BE6F00892DCE /* LocalLeaderBoardViewController.m in Sources */,
 				0BD6B20F191D271D00EF14A4 /* BattleScene.m in Sources */,
 				0BD6B16F191D271B00EF14A4 /* neon_matrix_impl.c in Sources */,
 				0BD6AFF4191D271800EF14A4 /* CCLabelTTF.m in Sources */,
@@ -1850,6 +1939,7 @@
 				0BD6B10D191D271A00EF14A4 /* ALSoundSourcePool.m in Sources */,
 				0BD6B01C191D271800EF14A4 /* CCParticleSystemBase.m in Sources */,
 				0BD6B0B3191D271900EF14A4 /* CCColor.m in Sources */,
+				0BD15F621953C8CB00892DCE /* WeeklyLeaderBoardViewController.m in Sources */,
 				0BD6B100191D271A00EF14A4 /* ALChannelSource.m in Sources */,
 				0BD6AFAC191D271600EF14A4 /* CCActionCatmullRom.m in Sources */,
 				0BD6B0C4191D271900EF14A4 /* NSAttributedString+CCAdditions.m in Sources */,
@@ -2015,7 +2105,13 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BattleTanks/Supporting Files/Prefix.pch";
@@ -2025,12 +2121,14 @@
 					"\"$(SRCROOT)/$(PROJECT_NAME)/Libraries/Chipmunk/objectivec/include\"",
 				);
 				INFOPLIST_FILE = BattleTanks/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2042,7 +2140,13 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BattleTanks/Supporting Files/Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2051,12 +2155,14 @@
 					"\"$(SRCROOT)/$(PROJECT_NAME)/Libraries/Chipmunk/objectivec/include\"",
 				);
 				INFOPLIST_FILE = BattleTanks/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

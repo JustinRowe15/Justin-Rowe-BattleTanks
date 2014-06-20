@@ -10,6 +10,9 @@
 #import "IntroScene.h"
 #import "CCAnimation.h"
 #import "CCActionManager.h"
+#import "AppSpecificValues.h"
+#import <GameKit/GameKit.h>
+#import <Parse/Parse.h>
 
 CCSprite *backgroundImage;
 
@@ -36,7 +39,7 @@ CCSprite *bomb1;
 
 CCSprite *explosion;
 
-int score;
+int gameScore;
 CCAction *bombExplode;
 CCLabelTTF *countdownLabel;
 CCLabelTTF *startLabel;
@@ -214,7 +217,7 @@ int secondsLeft;
     countdownLabel.position = ccp(40.0f, 304.0f);
     [self addChild:countdownLabel];
     
-    score = 0;
+    gameScore = 0;
     
     // Create a score label
     scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -465,12 +468,14 @@ int secondsLeft;
     }
     
     // Game Over Win Condition
-    if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && treeGone5 == YES && treeGone6 == YES && buildingGone == YES && buildingGone1 == YES && buildingGone2 == YES && buildingGone3 == YES && buildingGone4 == YES && buildingGone5 == YES && score >= 5000) {
+    if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && treeGone5 == YES && treeGone6 == YES && buildingGone == YES && buildingGone1 == YES && buildingGone2 == YES && buildingGone3 == YES && buildingGone4 == YES && buildingGone5 == YES && gameScore >= 5000) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You win!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-    } else if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && treeGone5 == YES && treeGone6 == YES && buildingGone == YES && buildingGone1 == YES && buildingGone2 == YES && buildingGone3 == YES && buildingGone4 == YES && buildingGone5 == YES && score < 5000) {
+        [self reportScore];
+    } else if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && treeGone5 == YES && treeGone6 == YES && buildingGone == YES && buildingGone1 == YES && buildingGone2 == YES && buildingGone3 == YES && buildingGone4 == YES && buildingGone5 == YES && gameScore < 5000) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You lose!  Try again for more points!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
+        [self reportScore];
     }
 }
 
@@ -549,26 +554,28 @@ int secondsLeft;
         
     } else {
         // Game over if time ends
-        if (score >= 5000) {
+        if (gameScore >= 5000) {
             [[CCDirector sharedDirector] pause];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You win!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
             [alert show];
+            [self reportScore];
         } else {
             [[CCDirector sharedDirector] pause];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You ran out of time!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
             [alert show];
+            
         }
     }
 }
 
 -(void)updateTreePoints {
-    score = score + 100;
-    [scoreLabel setString:[NSString stringWithFormat:@"%d", score]];
+    gameScore = gameScore + 100;
+    [scoreLabel setString:[NSString stringWithFormat:@"%d", gameScore]];
 }
 
 -(void)updateBuildingPoints {
-    score = score + 300;
-    [scoreLabel setString:[NSString stringWithFormat:@"%d", score]];
+    gameScore = gameScore + 300;
+    [scoreLabel setString:[NSString stringWithFormat:@"%d", gameScore]];
 }
 
 -(void)gameLose {
@@ -579,7 +586,7 @@ int secondsLeft;
     if (tankGone == YES){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-        
+        [self reportScore];
     }
 }
 
@@ -591,30 +598,43 @@ int secondsLeft;
     if (tankGone == YES){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead from a hidden mine!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-        
+        [self reportScore];
     }
 }
 
-/*-(void)removeExplosion {
-    id actionDelay = [CCActionDelay actionWithDuration:2.0f];
-    id cleanup = [CCActionCallFunc actionWithTarget:self selector:@selector(removeSprite)];
-    id removeSequence = [CCActionSequence actions:actionDelay, cleanup, nil];
-    [explosion runAction:removeSequence];
+//Collect score and send it to Game Center for the leaderboard display
+-(void)reportScore {
+    GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:kOverallLeaderboardID];
+    score.value = gameScore;
+    [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    GKScore *score1 = [[GKScore alloc] initWithLeaderboardIdentifier:kWeekLeaderboardID];
+    score1.value = gameScore;
+    [GKScore reportScores:@[score1] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    GKScore *score2 = [[GKScore alloc] initWithLeaderboardIdentifier:kDayLeaderboardID];
+    score2.value = gameScore;
+    [GKScore reportScores:@[score2] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    NSString *userName = [localPlayer alias];
+    
+    PFObject *battleTanksScore = [PFObject objectWithClassName:@"BattleTanksGameScore"];
+    battleTanksScore[@"gameScore"] = [NSNumber numberWithInt:gameScore];
+    battleTanksScore[@"playerName"] = userName;
+    [battleTanksScore saveInBackground];
 }
-
--(void)removeSprite {
-    [explosionBatchNode removeChild:explosion cleanup:YES];
-}
-
--(void)removeObject {
-    id actionDelay = [CCActionDelay actionWithDuration:2.0f];
-    id cleanup = [CCActionCallFunc actionWithTarget:self selector:@selector(remove)];
-    id removeSequence = [CCActionSequence actions:actionDelay, cleanup, nil];
-    [tree runAction:removeSequence];
-}
-
--(void)remove {
-    [physicsNode removeChild:tree cleanup:YES];
-} */
 
 @end
