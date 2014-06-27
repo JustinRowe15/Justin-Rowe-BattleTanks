@@ -15,7 +15,6 @@
 #import <Parse/Parse.h>
 
 CCSprite *backgroundImage;
-
 CCSprite *tank;
 
 CCSprite *tree;
@@ -49,6 +48,8 @@ CCSpriteBatchNode *explosionBatchNode;
 CCButton *pauseButton;
 
 CCAnimation *explosionAnimation;
+
+BOOL goldTank = NO;
 
 BOOL tankGone = NO;
 BOOL treeGone = NO;
@@ -101,16 +102,89 @@ int secondsLeft;
     physicsNode.collisionDelegate = self;
     [self addChild:physicsNode];
     
-    // Add tank sprite and collision body
-    tank = [CCSprite spriteWithImageNamed:@"tank.png"];
-    CGSize size = tank.contentSize;
-    CGPoint pos = tank.position;
-    tank.position = ccp(clampf(pos.x, size.width * 0.5f, screen.width - size.width * 0.5f),
-                          clampf(pos.y, size.height * 0.5f, screen.height - size.height * 0.5f));
-    tank.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tank.contentSize} cornerRadius:0];
-    tank.physicsBody.collisionGroup = @"tankGroup";
-    tank.physicsBody.collisionType = @"tankCollision";
-    [physicsNode addChild:tank];
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    NSString *userName = [localPlayer alias];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"BattleTanksGameScore"];
+    [query whereKey:@"playerName" equalTo:userName];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSUInteger gameCount = objects.count;
+            
+            //Measurement Achievement: If player has played more than 5 times, then they will start with 2000 points
+            if (gameCount >= 5) {
+                gameScore = 2000;
+            } else {
+                gameScore = 0;
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
+    PFQuery *winQuery = [PFQuery queryWithClassName:@"BattleTanksGameScore"];
+    [winQuery whereKey:@"playerName" equalTo:userName];
+    [winQuery whereKey:@"gameResult" hasPrefix:@"YES"];
+    [winQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSUInteger *resultsCount = objects.count;
+            int results = [NSNumber numberWithInt:resultsCount];
+            //Incremental Achievement: If player has more than a specific number of wins, they'll start with more points
+            if (results >= 5) {
+                gameScore = 2500;
+            } else if (results >= 10) {
+                gameScore = 3500;
+            } else if (results >= 15) {
+                gameScore = 4500;
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
+    PFQuery *pointsQuery = [PFQuery queryWithClassName:@"BattleTanksGameScore"];
+    [pointsQuery whereKey:@"playerName" equalTo:userName];
+    [pointsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSInteger sum = 0;
+            for (PFObject *object in objects) {
+                int scores = [object[@"gameScore"] intValue];
+                sum = sum + scores;
+                NSLog(@"%ld", (long)sum);
+                if (sum < 20000){
+                    // Add tank sprite and collision body
+                    tank = [CCSprite spriteWithImageNamed:@"goldTank.png"];
+                    CGSize size = tank.contentSize;
+                    CGPoint pos = tank.position;
+                    tank.position = ccp(clampf(pos.x, size.width * 0.5f, screen.width - size.width * 0.5f),
+                                        clampf(pos.y, size.height * 0.5f, screen.height - size.height * 0.5f));
+                    tank.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tank.contentSize} cornerRadius:0];
+                    tank.physicsBody.collisionGroup = @"tankGroup";
+                    tank.physicsBody.collisionType = @"tankCollision";
+                    [physicsNode addChild:tank];
+                    goldTank = NO;
+                } else {
+                    // Taking total amount of points played within game, if player has more than 20000 total points, then Gold Tank will be awarded
+                    // Add tank sprite and collision body
+                    tank = [CCSprite spriteWithImageNamed:@"goldTank.png"];
+                    CGSize size = tank.contentSize;
+                    CGPoint pos = tank.position;
+                    tank.position = ccp(clampf(pos.x, size.width * 0.5f, screen.width - size.width * 0.5f),
+                                        clampf(pos.y, size.height * 0.5f, screen.height - size.height * 0.5f));
+                    tank.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, tank.contentSize} cornerRadius:0];
+                    tank.physicsBody.collisionGroup = @"tankGroup";
+                    tank.physicsBody.collisionType = @"tankCollision";
+                    [physicsNode addChild:tank];
+                    goldTank = YES;
+                }
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
     
     // Add tree sprite and collision body
     tree = [CCSprite spriteWithImageNamed:@"tree.png"];
@@ -217,8 +291,6 @@ int secondsLeft;
     countdownLabel.position = ccp(40.0f, 304.0f);
     [self addChild:countdownLabel];
     
-    gameScore = 0;
-    
     // Create a score label
     scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:@"Verdana-Bold" fontSize:18.0f];
     scoreLabel.position = ccp(300.0f, 304.0f);
@@ -232,7 +304,7 @@ int secondsLeft;
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"explosion.plist"];
     explosionBatchNode = [CCSpriteBatchNode batchNodeWithFile:@"explosion.png"];
     [self addChild:explosionBatchNode];
-
+    
 	return self;
 }
 
@@ -451,7 +523,23 @@ int secondsLeft;
         [explosion runAction:bombExplode];
         [explosionBatchNode addChild:explosion];
         
-        [self gameLose];
+        NSMutableArray *bombsArray = [[NSMutableArray alloc] init];
+        NSNumber *i = [NSNumber numberWithInt:1];
+        int sum = 0;
+        if (goldTank == NO) {
+            [self gameLose];
+        } else {
+            //If GoldTank, has extra armor so it take longer to lose
+            [bombsArray addObject:i];
+            for (NSNumber *lives in bombsArray) {
+                int numbers = [lives intValue];
+                sum = sum + numbers;
+                if (sum == 5){
+                    goldTank = YES;
+                    [self gameLose];
+                }
+            }
+        }
     }
     
     else if (CGRectIntersectsRect(tank.boundingBox, bomb1.boundingBox)) {
@@ -464,18 +552,38 @@ int secondsLeft;
         [explosion runAction:bombExplode];
         [explosionBatchNode addChild:explosion];
         
-        [self gameLose];
+        NSMutableArray *bombsArray = [[NSMutableArray alloc] init];
+        NSNumber *i = [NSNumber numberWithInt:1];
+        int sum = 0;
+        if (goldTank == NO) {
+            [self gameLose];
+        } else {
+            //If GoldTank, has extra armor so it take longer to lose
+            [bombsArray addObject:i];
+            for (NSNumber *lives in bombsArray) {
+                int numbers = [lives intValue];
+                sum = sum + numbers;
+                if (sum == 5){
+                    goldTank = YES;
+                    [self gameLose];
+                }
+            }
+        }
     }
     
     // Game Over Win Condition
     if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && treeGone5 == YES && treeGone6 == YES && buildingGone == YES && buildingGone1 == YES && buildingGone2 == YES && buildingGone3 == YES && buildingGone4 == YES && buildingGone5 == YES && gameScore >= 5000) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You win!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-        [self reportScore];
+        
+        //Completion Achievement: Point Bonus for completing level
+        gameScore = gameScore + 2500;
+        
+        [self reportWin];
     } else if (treeGone == YES && treeGone1 == YES && treeGone2 == YES && treeGone3 == YES && treeGone4 == YES && treeGone5 == YES && treeGone6 == YES && buildingGone == YES && buildingGone1 == YES && buildingGone2 == YES && buildingGone3 == YES && buildingGone4 == YES && buildingGone5 == YES && gameScore < 5000) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You lose!  Try again for more points!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-        [self reportScore];
+        [self reportLoss];
     }
 }
 
@@ -558,12 +666,13 @@ int secondsLeft;
             [[CCDirector sharedDirector] pause];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You win!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
             [alert show];
-            [self reportScore];
+            //Completion Achievement: Point Bonus for completing level
+            gameScore = gameScore + 2500;
+            [self reportWin];
         } else {
             [[CCDirector sharedDirector] pause];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You ran out of time!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
             [alert show];
-            
         }
     }
 }
@@ -586,7 +695,9 @@ int secondsLeft;
     if (tankGone == YES){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-        [self reportScore];
+        //Negative Achievement: Reports score althrough player died with 1000 point deduction
+        gameScore = gameScore - 1000;
+        [self reportLoss];
     }
 }
 
@@ -598,12 +709,14 @@ int secondsLeft;
     if (tankGone == YES){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over" message:@"You're dead from a hidden mine!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
         [alert show];
-        [self reportScore];
+        //Negative Achievement: Reports score althrough player died with 1000 point deduction
+        gameScore = gameScore - 1000;
+        [self reportLoss];
     }
 }
 
 //Collect score and send it to Game Center for the leaderboard display
--(void)reportScore {
+-(void)reportWin {
     GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:kOverallLeaderboardID];
     score.value = gameScore;
     [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
@@ -630,10 +743,49 @@ int secondsLeft;
     
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     NSString *userName = [localPlayer alias];
+    NSString *win = @"WIN";
     
     PFObject *battleTanksScore = [PFObject objectWithClassName:@"BattleTanksGameScore"];
     battleTanksScore[@"gameScore"] = [NSNumber numberWithInt:gameScore];
     battleTanksScore[@"playerName"] = userName;
+    battleTanksScore[@"gameResult"] = win;
+    [battleTanksScore saveInBackground];
+}
+
+//Collect score and send it to Game Center for the leaderboard display
+-(void)reportLoss {
+    GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:kOverallLeaderboardID];
+    score.value = gameScore;
+    [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    GKScore *score1 = [[GKScore alloc] initWithLeaderboardIdentifier:kWeekLeaderboardID];
+    score1.value = gameScore;
+    [GKScore reportScores:@[score1] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    GKScore *score2 = [[GKScore alloc] initWithLeaderboardIdentifier:kDayLeaderboardID];
+    score2.value = gameScore;
+    [GKScore reportScores:@[score2] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    NSString *userName = [localPlayer alias];
+    NSString *loss = @"LOSS";
+    
+    PFObject *battleTanksScore = [PFObject objectWithClassName:@"BattleTanksGameScore"];
+    battleTanksScore[@"gameScore"] = [NSNumber numberWithInt:gameScore];
+    battleTanksScore[@"playerName"] = userName;
+    battleTanksScore[@"gameResult"] = loss;
     [battleTanksScore saveInBackground];
 }
 

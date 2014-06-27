@@ -40,6 +40,8 @@
 		0B38D9F81937B404006C8D0D /* building@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B38D9F61937B404006C8D0D /* building@2x.png */; };
 		0B38D9FB1937B433006C8D0D /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B38D9F91937B433006C8D0D /* bomb.png */; };
 		0B38D9FC1937B433006C8D0D /* bomb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B38D9FA1937B433006C8D0D /* bomb@2x.png */; };
+		0B507169195BB8D4003B7F55 /* goldTank.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B507167195BB8D4003B7F55 /* goldTank.png */; };
+		0B50716A195BB8D4003B7F55 /* goldTank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B507168195BB8D4003B7F55 /* goldTank@2x.png */; };
 		0BD15F3F19527EC000892DCE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BD15F3E19527EC000892DCE /* GameKit.framework */; };
 		0BD15F4219534E9200892DCE /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F4119534E9200892DCE /* GameCenterManager.m */; };
 		0BD15F46195363CF00892DCE /* LeaderBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD15F45195363CF00892DCE /* LeaderBoard.m */; };
@@ -298,6 +300,8 @@
 		0B38D9F61937B404006C8D0D /* building@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "building@2x.png"; sourceTree = "<group>"; };
 		0B38D9F91937B433006C8D0D /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb.png; sourceTree = "<group>"; };
 		0B38D9FA1937B433006C8D0D /* bomb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bomb@2x.png"; sourceTree = "<group>"; };
+		0B507167195BB8D4003B7F55 /* goldTank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldTank.png; sourceTree = "<group>"; };
+		0B507168195BB8D4003B7F55 /* goldTank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goldTank@2x.png"; sourceTree = "<group>"; };
 		0BD15F3E19527EC000892DCE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		0BD15F4019534E9200892DCE /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterManager.h; sourceTree = "<group>"; };
 		0BD15F4119534E9200892DCE /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterManager.m; sourceTree = "<group>"; };
@@ -864,6 +868,8 @@
 				0B1CC769192ECDE20019253D /* background.png */,
 				0B1CC76A192ECDE20019253D /* background@2x.png */,
 				0B1CC772192EE5C60019253D /* start.png */,
+				0B507167195BB8D4003B7F55 /* goldTank.png */,
+				0B507168195BB8D4003B7F55 /* goldTank@2x.png */,
 				0B1CC773192EE5C60019253D /* start@2x.png */,
 				0BE8A11419380217002EE9C3 /* default-568h@2x.png */,
 				0BE8A11519380217002EE9C3 /* default.png */,
@@ -1784,6 +1790,7 @@
 				0B1CC7B7192FA5370019253D /* exp1.png in Resources */,
 				0B1CC7C0192FA5370019253D /* exp10.png in Resources */,
 				0BE8A1131937FF57002EE9C3 /* Images.xcassets in Resources */,
+				0B50716A195BB8D4003B7F55 /* goldTank@2x.png in Resources */,
 				0B1CC7BD192FA5370019253D /* exp7.png in Resources */,
 				0B38D9F41937B3B9006C8D0D /* tree@2x.png in Resources */,
 				0B1CC7BE192FA5370019253D /* exp8.png in Resources */,
@@ -1793,6 +1800,7 @@
 				0B1CC774192EE5C60019253D /* start.png in Resources */,
 				0BD6B0D8191D271900EF14A4 /* LICENSE_cocos2d.txt in Resources */,
 				0BF52A9E1925A6DF008093B8 /* boom5.mp3 in Resources */,
+				0B507169195BB8D4003B7F55 /* goldTank.png in Resources */,
 				0B1CC7C2192FA5370019253D /* exp12.png in Resources */,
 				0B38D9EF1937B339006C8D0D /* tank.png in Resources */,
 				0B1CC7BF192FA5370019253D /* exp9.png in Resources */,
@@ -2038,7 +2046,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2058,7 +2066,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

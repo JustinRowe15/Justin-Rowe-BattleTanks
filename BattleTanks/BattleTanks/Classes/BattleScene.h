@@ -19,6 +19,7 @@
 - (void)updateCounter;
 - (void)updateTreePoints;
 - (void)updateBuildingPoints;
-- (void)reportScore;
+- (void)reportWin;
+- (void)reportLoss;
 
 @end
